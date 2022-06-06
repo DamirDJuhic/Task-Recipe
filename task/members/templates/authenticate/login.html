@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% block title%}
+Log in
+{%endblock%}
+{% block content%}
+
+<h1>Login</h1>
+<br>
+<form method="POST">
+   {% csrf_token%}
+   <form>
+      <div class="mb-3">
+         <small>Your username</small>
+        <input type="type" class="form-control" name="username" placeholder="Type your username"> 
+      </div>
+      <div class="mb-3">
+         <small>Your password</small>
+        <input type="password" class="form-control" name="password" placeholder="Type your password">
+      </div>
+      <br>
+      <button type ="submit" class="btn btn-primary">Login</button>
+   </form>
+   <p>If you don't have account <a href="{% url 'registration' %}">Sing</a> up for free</p>
+{% endblock %}

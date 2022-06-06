@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block title%}
+{{ reception.title }}
+{%endblock%}
+{% block content%}
+
+<h1>{{ reception.title }}</h1>
+<small>By: {{ reception.author }} - {{ reception.reception_date }}</small>
+<br>
+<p>{{ reception.describe|safe }}</p>
+<ul>
+<p>Ingredent:</p>
+   <ul>
+      {% for ingredient in ingredients %}
+         {%if ingredient.recipe == reception %}
+               <li>{{ ingredient.nameing }}</li>
+         {% endif %}
+      {% endfor %}
+   </ul>
+<form action="{% url 'submitratings' reception.id %}" method="POST">
+   {% csrf_token %}
+   <div class="rate">
+      <input type="radio" id="star5" name="rating" value="5" />
+      <label for="star5" title="5">5 stars</label>
+      <input type="radio" id="star4" name="rating" value="4" />
+      <label for="star4" title="4">4 stars</label>
+      <input type="radio" id="star3" name="rating" value="3" />
+      <label for="star3" title="3">3 stars</label>
+      <input type="radio" id="star2" name="rating" value="2" />
+      <label for="star2" title="2">2 stars</label>
+      <input type="radio" id="star1" name="rating" value="1" />
+      <label for="star1" title="1">1 star</label>
+   </div>
+   {% if user.is_authenticated %}
+      {% if user.id == reception.author.id %}
+         <p>Sorry you can not rate your own reception</p>
+      {% else%}
+      <input type="submit" name="Submit value" class="btn btn-primary">
+      {% endif %}
+   {% endif %}
+</form>
+<br>
+{% if user.is_authenticated %}
+   {% if user.id == reception.author.id %}
+      <a href="{% url 'delete' reception.pk %}" class="btn btn-danger"> delete</a>
+   {% endif %}
+{% endif %}
+
+
+
+{% endblock %}

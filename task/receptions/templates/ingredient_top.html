@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+{% block content%}
+<h3 style="position: center;">Top 5 ingredient</h3>
+<ul>
+   {% for ingredient in ingredients %}
+      <li>{{ ingredient.nameing }}</li>
+   {% endfor %}
+</ul>
+
+{% endblock%}

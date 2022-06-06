@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% block content%}
+{% if user.is_authenticated %}
+            <h3>{{ user.first_name }} {{ user.last_name }} - {{ user.email }}</h3>
+   <div class="row">
+         {% for reception in object_list %}
+         {% if user.id == reception.author.id %}
+         <div class="col-sm-6">
+            <div class="card text-bg-info mb-3">
+               <div class="card-body">
+                  <h3 class="card-title"><a href="{% url 'foodmaker' reception.pk %}">{{ reception.title }}</a> - <small>By me</small>
+                     {% if user.id == reception.author.id %}
+                     <a href="{% url 'delete' reception.pk %}" class="btn btn-danger float-right"> delete</a>
+                     {% endif %}
+                  </h3>
+                  <p class="card-text">{{ reception.describe }} <br> Rating {{ reception.rating }}</p>
+               </div>
+            </div>
+         </div>
+         {%endif%}
+         {% endfor%}
+      </div>
+   {% endif %}
+<h1 style="text-align: center;">Reception list</h1>
+<div class="row">
+   {% for reception in object_list %}
+   <div class="col-sm-6">
+      <div class="card text-bg-info mb-3">
+       <div class="card-body">
+         <h3 class="card-title"><a href="{% url 'foodmaker' reception.pk %}">{{ reception.title }}</a><small> - By : {{ reception.author }}</small>
+            {% if user.id == reception.author.id %}
+            <a href="{% url 'delete' reception.pk %}" class="btn btn-danger float-right" > delete</a>
+         {% endif %}
+         </h3>
+         <p class="card-text">{{ reception.describe }} <br> Rating {{ reception.rating }}</p>
+       </div>
+     </div>
+   </div>
+   {% endfor%}
+   <h3>Ingredient Top 5 used : </h3>
+   <ul>
+      {% for ingredient in ingredients_list %}
+               <li>{{ ingredient.nameing }}</li>
+      {% endfor %}
+   </ul>
+</div>
+{% endblock %}

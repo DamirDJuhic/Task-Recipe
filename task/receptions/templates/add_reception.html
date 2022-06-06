@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block title%}
+Add new
+{%endblock%}
+{% block content%}
+{% if user.is_authenticated %}
+<h1>Add Reception</h1>
+<br>
+<form action="." method="POST">
+   {% csrf_token %}
+   {{ form.as_p }}
+   <br>
+   <br>
+   {{ formset.management_form }}
+   {% for form in formset %}
+   {{ form.as_p }}
+   {% endfor %}
+   <button class="btn btn-primary" type="submit">Add new</button>
+
+</form>
+<script>
+   var name = '{{ user.id}}';
+   document.getElementById("user").value 
+      = name;
+</script>
+{% endif%}
+
+{% endblock %}
