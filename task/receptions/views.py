@@ -13,7 +13,12 @@ class Home(ListView):
    model = Reception
    template_name = 'home.html'
    ordering = ['-reception_date']
-   
+   def get_queryset(self):
+      return Reception.objects.order_by('title')
+   def get_context_data(self, **kwargs):
+      context = super(Home, self).get_context_data(**kwargs)
+      context['ingredients'] =Ingredient.objects.values('nameing').annotate(nameing_count=Count('nameing')).order_by('-nameing_count')[:5]
+      return context
 
 
 class receptionview(DetailView):
